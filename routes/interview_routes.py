@@ -99,3 +99,19 @@ def get_history():
             "feedback": log.feedback
         } for log in logs
     ])
+from flask import request, jsonify
+
+@interview_bp.route("/evaluate-browser", methods=["GET"])
+def evaluate_browser():
+    question = request.args.get("question")
+    answer = request.args.get("answer")
+
+    # simple scoring logic (you can improve later)
+    score = 8 if answer else 0
+
+    return jsonify({
+        "question": question,
+        "answer": answer,
+        "score": score,
+        "feedback": "Good answer" if score > 0 else "No answer provided"
+    })
